@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 
 import cv2
 import numpy as np
@@ -28,6 +29,13 @@ def genHogData(img):
     return hog_descriptor
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_methods=['*'],
+    allow_headers=['*']
+)
 
 @app.get("/")
 async def root():
